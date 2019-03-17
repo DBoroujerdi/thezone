@@ -9,6 +9,12 @@ A video streaming service that checks how many video streams a user is watching 
 
 ## Deployment
 
+Initial setup
+
+`pm2 deploy staging setup`
+
+Updates
+
 `pm2 deploy ecosystem.config.js staging`
 
 ## Endpoints
@@ -26,11 +32,13 @@ returns 200 - {"status":"UP"}
 
 ## Server
 
-- `curl -v failblazing.com/watch` -- 400
-- `curl -v --header "Session-Id: lkjlkjely" 'failblazing.com/watch'` -- 200
-- `curl -v --header "Session-Id: lkjlkjely" 'failblazing.com/watch'` -- 200
-- `curl -v --header "Session-Id: lkjlkjely" 'failblazing.com/watch'` -- 200
-- `curl -v --header "Session-Id: lkjlkjely" 'failblazing.com/watch'` -- 401
+** I had trouble getting my nginx reverse proxy working, so you have to add the port
+
+- `curl -v failblazing.com:3001/watch` -- 400
+- `curl -v --header "Session-Id: lkjlkjely" 'failblazing.com:3001/watch'` -- 200
+- `curl -v --header "Session-Id: lkjlkjely" 'failblazing.com:3001/watch'` -- 200
+- `curl -v --header "Session-Id: lkjlkjely" 'failblazing.com:3001/watch'` -- 200
+- `curl -v --header "Session-Id: lkjlkjely" 'failblazing.com:3001/watch'` -- 401
 
 
 ### Locally
