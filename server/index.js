@@ -3,12 +3,14 @@
 const express = require('express');
 const winston = require('winston');
 const consoleTransport = new winston.transports.Console();
+const uuid = require('uuid/v4');
 const myWinstonOptions = {
     transports: [consoleTransport]
 };
 const logger = new winston.createLogger(myWinstonOptions);
 
 const middleware = require('./middleware');
+const database = require('./database');
 
 const app = express();
 
@@ -20,7 +22,17 @@ const streamMiddleware = [
 ];
 
 app.get('/watch', ...streamMiddleware, (req, res) => {
-  res.send('OK');
+  const sessionId = req.get('Session-Id');
+  const streamId = uuid();
+
+  try {
+    database.putStream(sessionId, streamId);
+  } catch(err) {
+    res.err(err);
+    return;
+  }
+
+  res.send('OK, you are now streaming content.');
 });
 
 app.get('/health', (_, res) => {
