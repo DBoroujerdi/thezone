@@ -2,11 +2,10 @@
 
 A video streaming service that checks how many video streams a user is watching which also prevents a user from watching more than 3 streams at a time.
 
-
 ### Prerequisites
 
-- (nodejs)[https://nodejs.org/en/]
-- (yarn)[https://yarnpkg.com/en/]
+- [nodejs](https://nodejs.org/en/)
+- [yarn](https://yarnpkg.com/en/)
 
 ## Deployment
 
@@ -14,35 +13,51 @@ todo url to online digital oceon deployment
 
 ## Endpoints
 
-`GET` - `/watch?v=hpKlCKL9FsM`
+`GET` - `/watch`
 
-returns 400 bad request if session ID is not present
-returns 403 if the concurrent stream count has been exceeded
+returns 400 bad request - if session ID is not present
+returns 401 unauthorized - if the concurrent stream count has been exceeded
 
 `GET` - `/health`
 
+returns 200 - {"status":"UP"}
+
 ## Testing
 
-Locally
+## Server
+
+`curl -v localhost:3000/watch` -- 400
+`curl -v --header "Session-Id: lkjlkjely" 'failblazing.com/watch'` -- 200
+`curl -v --header "Session-Id: lkjlkjely" 'failblazing.com/watch'` -- 200
+`curl -v --header "Session-Id: lkjlkjely" 'failblazing.com/watch'` -- 200
+`curl -v --header "Session-Id: lkjlkjely" 'failblazing.com/watch'` -- 401
+
+
+### Locally
 
 `yarn start`
 
-`curl -v --header "Session-Id: ipfreely" localhost:3000/watch` -- 200
 `curl -v localhost:3000/watch` -- 400
+`curl -v --header "Session-Id: lkjlkjely" 'localhost:3000/watch'` -- 200
+`curl -v --header "Session-Id: lkjlkjely" 'localhost:3000/watch'` -- 200
+`curl -v --header "Session-Id: lkjlkjely" 'localhost:3000/watch'` -- 200
+`curl -v --header "Session-Id: lkjlkjely" 'localhost:3000/watch'` -- 401
 
 
 ## Architecture
-todo Explanation/motivation for design
 
-todo draw.io diagram of imagined architecture that this service lives within
+![Imagined context..](diagram/architecture.png)
 
-Gateway - decides where to forward the request to. e.g any unauthenticated requests are rejected. Requests to login are forwarded to the Authentication Service. It encapsulates security mechanisms such as authentication tokens. It can convert from external protocols such as websocket and XMPP to internal protocols such as HTTP or AMQP.
+To implement this I first came up with an imagined system design in which this service would live. In this system auth concerns are handled by a gatway which routes auth requests to the authentication service, maybe assigns a user a session, with all subsequest requests to other services in the system only allowed through if they have a valid session. Maybe the session is also checked with the auth service for valididity? The point being is that these concerns don't have to be implemented in this service.
 
-Authentication service - seperation of concerns. Handles authentication so that other services behind the gateway don't have to. Subsequent requests are handled by passing an auth token, with requests lacking a valid token not being allowed beyond the gateway to the stream service. Hence the reason for the API. Or something.. todo reword.
+The flow might go like this..
+1. Login - auth service authenticates the user and assigns a session id.
+2. Request to view content - session id is present on in a cookie, which gateway validates.
+3. Request is forwarded to the stream service as a HTTP header. Cookies are a front end concern so this should not be forwarded as such.
+4. User is streamed the content or a stream ID is returned to so that a subsequent request can be made to a server that serves the content.
 
 
 ## Scaling
 
-todo horizontally scale service as it is stateless. Kubernetes platform, scale it up..
-todo sit behind aload balancer
-todo sharding database
+* Horizontally scale service as it is stateless. If you use plaform such as Kubernetes, scale it up..
+* Shard database on session ID so that load to database is partitioned.
