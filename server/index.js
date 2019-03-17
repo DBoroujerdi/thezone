@@ -8,14 +8,18 @@ const myWinstonOptions = {
 };
 const logger = new winston.createLogger(myWinstonOptions);
 
-const sessionMiddleware = require('./middleware/session');
+const middleware = require('./middleware');
 
 const app = express();
-const port = 3000;
 
-app.use(sessionMiddleware);
+app.use(...middleware.loggers);
 
-app.get('/watch', (req, res) => {
+const streamMiddleware = [
+  middleware.requireSessionId,
+  middleware.echoSessionHeader
+];
+
+app.get('/watch', ...streamMiddleware, (req, res) => {
   res.send('OK');
 });
 
@@ -23,6 +27,7 @@ app.get('/health', (_, res) => {
   res.json({status: 'UP'});
 });
 
+const port = 3000;
 const server = app.listen(port, () => {
   logger.info(`Listening on port ${port}!`);
 });

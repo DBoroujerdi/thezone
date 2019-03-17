@@ -1,19 +1,14 @@
-const uuid = require('uuid/v4');
+'use strict';
 
 const sessionHeaderName = 'Session-Id';
 
-function session(req, res, next) {
+function middleware(req, res, next) {
 
   let sessionId = req.get(sessionHeaderName);
-
-  if (typeof sessionId === 'undefined') {
-    sessionId = uuid();
-    req.headers[sessionHeaderName] = sessionId;
-  }
 
   res.set(sessionHeaderName, sessionId);
 
   next();
 }
 
-module.exports = session;
+module.exports = middleware;

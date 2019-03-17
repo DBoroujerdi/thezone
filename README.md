@@ -1,6 +1,6 @@
 # Stream Service
 
-A service that checks how many video streams a user is watching which also prevents a user from watching more than 3 streams at a time.
+A video streaming service that checks how many video streams a user is watching which also prevents a user from watching more than 3 streams at a time.
 
 
 ### Prerequisites
@@ -23,7 +23,12 @@ returns 403 if the concurrent stream count has been exceeded
 
 ## Testing
 
-todo example curl with header or cookie?
+Locally
+
+`yarn start`
+
+`curl -v --header "Session-Id: ipfreely" localhost:3000/watch` -- 200
+`curl -v localhost:3000/watch` -- 400
 
 
 ## Architecture
