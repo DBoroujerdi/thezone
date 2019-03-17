@@ -26,7 +26,7 @@ returns 200 - {"status":"UP"}
 
 ## Server
 
-- `curl -v localhost:3000/watch` -- 400
+- `curl -v failblazing.com/watch` -- 400
 - `curl -v --header "Session-Id: lkjlkjely" 'failblazing.com/watch'` -- 200
 - `curl -v --header "Session-Id: lkjlkjely" 'failblazing.com/watch'` -- 200
 - `curl -v --header "Session-Id: lkjlkjely" 'failblazing.com/watch'` -- 200
@@ -37,11 +37,11 @@ returns 200 - {"status":"UP"}
 
 - `yarn start`
 
-- `curl -v localhost:3000/watch` -- 400
-- `curl -v --header "Session-Id: lkjlkjely" 'localhost:3000/watch'` -- 200
-- `curl -v --header "Session-Id: lkjlkjely" 'localhost:3000/watch'` -- 200
-- `curl -v --header "Session-Id: lkjlkjely" 'localhost:3000/watch'` -- 200
-- `curl -v --header "Session-Id: lkjlkjely" 'localhost:3000/watch'` -- 401
+- `curl -v localhost:3001/watch` -- 400
+- `curl -v --header "Session-Id: lkjlkjely" 'localhost:3001/watch'` -- 200
+- `curl -v --header "Session-Id: lkjlkjely" 'localhost:3001/watch'` -- 200
+- `curl -v --header "Session-Id: lkjlkjely" 'localhost:3001/watch'` -- 200
+- `curl -v --header "Session-Id: lkjlkjely" 'localhost:3001/watch'` -- 401
 
 
 ## Architecture

@@ -44,7 +44,7 @@ app.get('/health', (_, res) => {
   res.json({status: 'UP'});
 });
 
-const port = 3000;
+const port = 3001;
 const server = app.listen(port, () => {
   logger.info(`Listening on port ${port}!`);
 });
