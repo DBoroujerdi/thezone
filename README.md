@@ -9,7 +9,7 @@ A video streaming service that checks how many video streams a user is watching 
 
 ## Deployment
 
-todo url to online digital oceon deployment
+`pm2 deploy ecosystem.config.js staging`
 
 ## Endpoints
 
