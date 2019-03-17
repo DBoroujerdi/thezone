@@ -15,6 +15,7 @@
     "winston": "^3.2.1"
   },
   "devDependencies": {
+    "axios": "^0.18.0",
     "eslint": "^5.15.2",
     "eslint-config-standard": "^12.0.0",
     "eslint-plugin-import": "^2.16.0",
@@ -23,9 +24,8 @@
     "eslint-plugin-standard": "^4.0.0",
     "jest": "^24.5.0",
     "node-mocks-http": "^1.7.3",
-    "request": "^2.88.0",
-    "request-promise": "^4.2.4",
     "sinon": "^7.2.7",
     "uuid-validate": "^0.0.3"
-  }
+  },
+  "jest": { "testEnvironment": "node" }
 }

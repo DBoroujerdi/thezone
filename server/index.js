@@ -23,16 +23,21 @@ const streamMiddleware = [
 
 app.get('/watch', ...streamMiddleware, (req, res) => {
   const sessionId = req.get('Session-Id');
-  const streamId = uuid();
 
-  try {
-    database.putStream(sessionId, streamId);
-  } catch(err) {
-    res.err(err);
-    return;
+  if (database.getStreams(sessionId).length >= 3) {
+    res.status(401).send('Exceeded watch limit.');
+  } else {
+    const streamId = uuid();
+
+    try {
+      database.putStream(sessionId, streamId);
+    } catch(err) {
+      res.err(err);
+      return;
+    }
+
+    res.send('OK, you are now streaming content.');
   }
-
-  res.send('OK, you are now streaming content.');
 });
 
 app.get('/health', (_, res) => {
