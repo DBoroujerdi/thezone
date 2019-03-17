@@ -15,8 +15,8 @@ A video streaming service that checks how many video streams a user is watching 
 
 `GET` - `/watch`
 
-returns 400 bad request - if session ID is not present
-returns 401 unauthorized - if the concurrent stream count has been exceeded
+- returns 400 bad request - if session ID is not present
+- returns 401 unauthorized - if the concurrent stream count has been exceeded
 
 `GET` - `/health`
 
@@ -26,22 +26,22 @@ returns 200 - {"status":"UP"}
 
 ## Server
 
-`curl -v localhost:3000/watch` -- 400
-`curl -v --header "Session-Id: lkjlkjely" 'failblazing.com/watch'` -- 200
-`curl -v --header "Session-Id: lkjlkjely" 'failblazing.com/watch'` -- 200
-`curl -v --header "Session-Id: lkjlkjely" 'failblazing.com/watch'` -- 200
-`curl -v --header "Session-Id: lkjlkjely" 'failblazing.com/watch'` -- 401
+- `curl -v localhost:3000/watch` -- 400
+- `curl -v --header "Session-Id: lkjlkjely" 'failblazing.com/watch'` -- 200
+- `curl -v --header "Session-Id: lkjlkjely" 'failblazing.com/watch'` -- 200
+- `curl -v --header "Session-Id: lkjlkjely" 'failblazing.com/watch'` -- 200
+- `curl -v --header "Session-Id: lkjlkjely" 'failblazing.com/watch'` -- 401
 
 
 ### Locally
 
-`yarn start`
+- `yarn start`
 
-`curl -v localhost:3000/watch` -- 400
-`curl -v --header "Session-Id: lkjlkjely" 'localhost:3000/watch'` -- 200
-`curl -v --header "Session-Id: lkjlkjely" 'localhost:3000/watch'` -- 200
-`curl -v --header "Session-Id: lkjlkjely" 'localhost:3000/watch'` -- 200
-`curl -v --header "Session-Id: lkjlkjely" 'localhost:3000/watch'` -- 401
+- `curl -v localhost:3000/watch` -- 400
+- `curl -v --header "Session-Id: lkjlkjely" 'localhost:3000/watch'` -- 200
+- `curl -v --header "Session-Id: lkjlkjely" 'localhost:3000/watch'` -- 200
+- `curl -v --header "Session-Id: lkjlkjely" 'localhost:3000/watch'` -- 200
+- `curl -v --header "Session-Id: lkjlkjely" 'localhost:3000/watch'` -- 401
 
 
 ## Architecture
