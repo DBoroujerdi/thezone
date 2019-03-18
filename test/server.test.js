@@ -20,7 +20,7 @@ describe('stream service', () => {
       headers: { 'Session-Id': uuid() }
     };
 
-    const res = await axios.get(`http://localhost:3000/watch`, opts);
+    const res = await axios.get(`http://localhost:3001/watch`, opts);
 
     expect(res.data).toBe('OK, you are now streaming content.');
   });
@@ -31,7 +31,7 @@ describe('stream service', () => {
     };
 
     try {
-      await axios.get('http://localhost:3000/watch', opts);
+      await axios.get('http://localhost:3001/watch', opts);
     } catch (err) {
       expect(err.response.status).toBe(400);
       return done();
@@ -44,17 +44,17 @@ describe('stream service', () => {
       headers: { 'Session-Id': uuid() }
     };
 
-    const res0 = await axios.get(`http://localhost:3000/watch`, opts);
+    const res0 = await axios.get(`http://localhost:3001/watch`, opts);
     expect(res0.status).toBe(200);
 
-    const res1 = await axios.get(`http://localhost:3000/watch`, opts);
+    const res1 = await axios.get(`http://localhost:3001/watch`, opts);
     expect(res1.status).toBe(200);
 
-    const res2 = await axios.get(`http://localhost:3000/watch`, opts);
+    const res2 = await axios.get(`http://localhost:3001/watch`, opts);
     expect(res2.status).toBe(200);
 
     try {
-      await axios.get('http://localhost:3000/watch', opts);
+      await axios.get('http://localhost:3001/watch', opts);
     } catch (err) {
       expect(err.response.status).toBe(401);
       return done();
@@ -63,7 +63,7 @@ describe('stream service', () => {
   });
 
   it('should return a health check of success when up', async () => {
-    const res = await axios.get("http://localhost:3000/health");
+    const res = await axios.get("http://localhost:3001/health");
 
     expect(res.status).toBe(200);
     expect(res.data).toEqual({"status":"UP"});
